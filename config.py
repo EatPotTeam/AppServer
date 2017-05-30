@@ -13,6 +13,9 @@ class Config:
     MAIL_PASSWORD = 'ijqywwhcjdcnbicg' # os.environ.get('MAIL_PASSWORD') or
     FLASK_MAIL_SUBJECT_PREFIX = '[EatPotTeam]'
     FLASK_MAIL_SENDER = '413327079@qq.com'
+    CACHE_TYPE = 'redis'
+    CACHE_REDIS_HOST = '127.0.0.1'
+    CACHE_REDIS_PORT = 6379
 
     @staticmethod
     def init_app(app):

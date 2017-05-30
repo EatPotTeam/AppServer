@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# a reference file
+t_系分吃锅组_11_database_model.pdf
+
+# migrations
+/migrations

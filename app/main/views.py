@@ -1,13 +1,14 @@
 import requests, json
 from flask import g, jsonify, request
 from . import main
-from .. import db
+from .. import db, cache
 from ..email import send_email
 from ..models import User
 from ..api.authentication import auth
 
 
 @main.route('/', methods=['GET'])
+@cache.cached(timeout=3600)
 def index():
     return '<h1>EatPotTeam Movie Ticketing Server</h1>'
 
@@ -61,6 +62,7 @@ def resend_confirmation():
 
 
 @main.route('/movie', methods=['GET'])
+@cache.cached(timeout=3600)
 def get_today_movies():
     url = 'http://localhost:5000/api/movie'
     res = requests.get(url=url)
@@ -68,6 +70,7 @@ def get_today_movies():
 
 
 @main.route('/movie/<int:id>', methods=['GET'])
+@cache.cached(timeout=3600)
 def get_movie_by_id(id):
     url = 'http://localhost:5000/api/movie/' + str(id)
     res = requests.get(url=url)
@@ -75,6 +78,7 @@ def get_movie_by_id(id):
 
 
 @main.route('/cinema', methods=['GET'])
+@cache.cached(timeout=3600)
 def get_all_cinema():
     url = 'http://localhost:5000/api/cinema'
     res = requests.get(url=url)
@@ -82,6 +86,7 @@ def get_all_cinema():
 
 
 @main.route('/cinema/<int:id>', methods=['GET'])
+@cache.cached(timeout=3600)
 def get_cinema_broadcast(id):
     url = 'http://localhost:5000/api/cinema/' + str(id)
     res = requests.get(url=url)
@@ -89,6 +94,7 @@ def get_cinema_broadcast(id):
 
 
 @main.route('/movie/<int:id>/cinema', methods=['GET'])
+@cache.cached(timeout=3600)
 def get_movie_on_cinema(id):
     url = 'http://localhost:5000/api/movie/' + str(id) + '/cinema'
     res = requests.get(url=url)
