@@ -13,5 +13,11 @@ python3.5, mysql, redis
 
 * Install require package
   * pip3 install -r requirement.txt
+* Create database migrate repo
+  * python3 managy.py db init
+* Create database migrate script
+  * python3 managy.py db migrate -m "initial migration"
+* Run the script
+  * python3 managy.py db upgrade
 * Run the server
   * python3 managy.py runserver
