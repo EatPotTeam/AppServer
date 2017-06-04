@@ -12,7 +12,7 @@ python3.5, mysql, redis
 # Deploy
 
 * Install require package
-  * pip3 install -r requirement.txt
+  * pip3 install -r requirements.txt
 * Create database migrate repo
   * python3 managy.py db init
 * Create database migrate script
