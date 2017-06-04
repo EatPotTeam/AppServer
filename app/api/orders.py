@@ -1,8 +1,10 @@
 import requests
-from flask import g, jsonify, request
+from flask import g, jsonify, request, url_for
+# from celery import current_app as current_celery
 from . import api
 from .. import db
 from ..models import Order, OrderItem, ORDER_STATUS, Coupon
+# from ..utils import wait_payment
 
 
 @api.route('/orders', methods=['GET'])
@@ -126,6 +128,31 @@ def new_order():
     db.session.add(order)
     db.session.add(user)
     db.session.commit()
+    # task = wait_payment.delay(order_id=order.id)
+    return jsonify({
+        'result': 'success'
+        # 'location': url_for('api.task_status', task_id=task.id)
+    })
+
+
+@api.route('/orders/<int:id>', methods=['DELETE'])
+def delete_order(id):
+    order = Order.query.get_or_404(id)
+    # cancel order lock seat
+    order_items = order.order_items
+    url = 'http://localhost:5000/api/broadcast/' + str(order.broadcast_id)
+    for order_item in order_items:
+        requests.delete(url=url,
+                        json={'row': order_item.row, 'col': order_item.col})
+        db.session.delete(order_item)
+    # cancel coupons
+    coupons = order.coupons_used
+    for coupon in coupons:
+        coupon.order_id = None
+        db.session.add(coupon)
+    # cancel order
+    db.session.delete(order)
+    db.session.commit()
     return jsonify({
         'result': 'success'
     })
@@ -145,3 +172,30 @@ def order_paid(id):
     return jsonify({
         'result': 'success'
     })
+
+
+# @api.route('/status/<task_id>')
+# def task_status(task_id):
+#     task = wait_payment.AsyncResult(task_id)
+#     if task.state == 'PENDING':
+#         # job did not start yet
+#         response = {
+#             'state': task.state,
+#             'status': 'Pending...'
+#         }
+#     elif task.state != 'FAILURE':
+#         response = {
+#             'state': task.state,
+#             'current': task.info.get('current', 0),
+#             'total': task.info.get('total', 1),
+#             'status': task.info.get('status', '')
+#         }
+#         if 'result' in task.info:
+#             response['result'] = task.info['result']
+#     else:
+#         # something went wrong in the background job
+#         response = {
+#             'state': task.state,
+#             'status': str(task.info),  # this is the exception raised
+#         }
+#     return jsonify(response)
