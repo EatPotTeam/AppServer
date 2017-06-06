@@ -6,16 +6,16 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    MAIL_SERVER = 'smtp.qq.com'
+    MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.qq.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = '413327079@qq.com' # os.environ.get('MAIL_USERNAME') or
-    MAIL_PASSWORD = 'ijqywwhcjdcnbicg' # os.environ.get('MAIL_PASSWORD') or
-    FLASK_MAIL_SUBJECT_PREFIX = '[EatPotTeam]'
-    FLASK_MAIL_SENDER = '413327079@qq.com'
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    FLASK_MAIL_SUBJECT_PREFIX = os.environ.get('MAIL_SUBJECT_PREFIX') or '[EatPotTeam]'
+    FLASK_MAIL_SENDER = os.environ.get('MAIL_SENDER')
     CACHE_TYPE = 'redis'
-    CACHE_REDIS_HOST = '127.0.0.1'
-    CACHE_REDIS_PORT = 6379
+    CACHE_REDIS_HOST = os.environ.get('REDIS_HOST') or '127.0.0.1'
+    CACHE_REDIS_PORT = os.environ.get('REDIS_PORT') or 6379
     # CELERY_BROKER_URL = 'redis://localhost:6379/'
     # CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
 
