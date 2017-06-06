@@ -6,8 +6,10 @@ the server of the internet online movie ticketing system
 python3.5, mysql, redis
 
 # Setting
-* mysql database name: ticketingServerDev
-* root password: 12234810
+* create a config file in directory app such as app/your_config.py
+* then complete the setting in your_config.py files
+* set the envvar
+  * $export YOURAPPLICATION_SETTINGS=your_config.py
 
 # Deploy
 
