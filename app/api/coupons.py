@@ -15,9 +15,7 @@ def get_all_coupons():
                 'coupon_id': coupon.id,
                 'discount_price': coupon.discount_price
             })
-    return jsonify({
-        'result': coupons_list
-    })
+    return jsonify(coupons_list)
 
 
 @api.route('/coupons/<int:type>', methods=['GET'])
