@@ -40,9 +40,7 @@ def get_all_orders():
             'order_items': orderItem_list,
             'coupons': coupon_list
         })
-    return jsonify({
-        'result': order_list
-    })
+    return jsonify(order_list)
 
 
 @api.route('/orders/<int:id>', methods=['GET'])
@@ -52,7 +50,7 @@ def get_order(id):
     if order.user_id != user.id:
         return jsonify({
             'error': 'forbidden'
-        })
+        }), 403
     # add order_items
     order_items = order.order_items
     orderItem_list = []
@@ -80,9 +78,7 @@ def get_order(id):
         'order_items': orderItem_list,
         'coupons': coupon_list
     }
-    return jsonify({
-        'result': order_info
-    })
+    return jsonify(order_info)
 
 
 @api.route('/orders', methods=['POST'])
@@ -112,7 +108,7 @@ def new_order():
                 db.session.rollback()
                 return jsonify({
                     'error': 'seat has been lock'
-                })
+                }), 400
             order_item = OrderItem(row=orderItem['row'],
                                   col=orderItem['col'])
             order.order_items.append(order_item)
