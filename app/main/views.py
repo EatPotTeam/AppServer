@@ -16,16 +16,16 @@ def index():
 @main.route('/auth/register', methods=['POST'])
 def register():
     detail = request.json
-    if detail is None or detail == '':
+    if not detail:
         return jsonify({
             'error': 'register fail!'
-        })
+        }), 400
     user_email = detail['email']
     user_password = detail['password']
     if User.query.filter_by(email=user_email).first() is not None:
         return jsonify({
             'error': 'email is used!'
-        })
+        }), 409
     user = User(email=user_email, password=user_password)
     db.session.add(user)
     db.session.commit()
@@ -46,7 +46,7 @@ def confirm(token):
     else:
         return jsonify({
             'error': 'The confirmation link is invalid or has expired.'
-        })
+        }), 401
 
 
 @main.route('/confirm')
