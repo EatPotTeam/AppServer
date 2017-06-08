@@ -2,6 +2,8 @@
 
 source ./venv/bin/activate
 
+export YOURAPPLICATION_SETTINGS=/var/www/eatpotmovie-ci/config.py
+
 pip3 install -r requirements.txt
 
 python3 managy.py db init
