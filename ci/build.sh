@@ -1,5 +1,7 @@
 #!/bin/bash
 
+virtualenv venv
+
 source ./venv/bin/activate
 
 export YOURAPPLICATION_SETTINGS=/var/www/eatpotmovie-ci/config.py
