@@ -6,9 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'python3 managy.py db init'
-                sh 'python3 managy.py db migrate -m "initial migration"'
-                sh 'python3 managy.py db upgrade'
+                sh './ci/build.sh'
             }
         }
 
