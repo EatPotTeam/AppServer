@@ -19,6 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'pm2 startOrRestart ecosystem.config.js --env dev'
+                sh 'pm2 save'
             }
         }
     }
