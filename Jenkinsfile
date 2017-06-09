@@ -18,8 +18,6 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'echo $HOME'
-                sh 'echo $USER'
                 sh 'pm2 startOrRestart ecosystem.config.js --env dev'
             }
         }
